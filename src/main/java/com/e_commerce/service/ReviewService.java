@@ -5,11 +5,10 @@ import com.e_commerce.entity.Review;
 import com.e_commerce.entity.User;
 import com.e_commerce.repository.ProductRepo;
 import com.e_commerce.repository.ReviewRepo;
-import com.e_commerce.request.ReviewRequest;
+import com.e_commerce.dto.ReviewRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 public class ReviewService {

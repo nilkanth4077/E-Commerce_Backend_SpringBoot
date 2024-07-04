@@ -1,7 +1,8 @@
 package com.e_commerce.controller;
 
 import com.e_commerce.entity.Product;
-import com.e_commerce.request.CreateProductRequest;
+import com.e_commerce.dto.CreateProductRequest;
+import com.e_commerce.exception.UserException;
 import com.e_commerce.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/product")
@@ -52,7 +52,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable Long id){
+    public String deleteProduct(@PathVariable Long id) throws UserException {
         return productService.deleteProduct(id);
     }
 

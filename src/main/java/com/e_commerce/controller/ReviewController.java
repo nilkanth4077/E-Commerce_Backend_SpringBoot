@@ -1,16 +1,12 @@
 package com.e_commerce.controller;
 
-import com.e_commerce.entity.Product;
 import com.e_commerce.entity.Review;
 import com.e_commerce.entity.User;
-import com.e_commerce.request.ReviewRequest;
-import com.e_commerce.service.ProductService;
-import com.e_commerce.service.RatingService;
+import com.e_commerce.dto.ReviewRequest;
 import com.e_commerce.service.ReviewService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/review")

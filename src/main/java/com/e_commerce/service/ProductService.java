@@ -2,9 +2,12 @@ package com.e_commerce.service;
 
 import com.e_commerce.entity.Category;
 import com.e_commerce.entity.Product;
+import com.e_commerce.entity.Size;
+import com.e_commerce.entity.User;
+import com.e_commerce.exception.UserException;
 import com.e_commerce.repository.CategoryRepo;
 import com.e_commerce.repository.ProductRepo;
-import com.e_commerce.request.CreateProductRequest;
+import com.e_commerce.dto.CreateProductRequest;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -63,16 +67,33 @@ public class ProductService {
         }
 
         Product product = new Product();
+
+        // Total quantity
+        Set<Size> sizes = request.getSizes();
+        int totalQuantity = 0;
+
+        for (Size size : sizes) {
+            totalQuantity += size.getQuantity();
+        }
+
+        // Set Discounted price
+        int discountedPrice = request.getPrice() - ((request.getPrice() * request.getDiscountPercent()) / 100);
+
         product.setTitle(request.getTitle());
         product.setColor(request.getColor());
         product.setDescription(request.getDescription());
         product.setDiscountPercent(request.getDiscountPercent());
-        product.setDiscountedPrice(request.getDiscountedPrice());
+
+        if(request.getDiscountPercent() == 0){
+            product.setDiscountedPrice(request.getPrice());
+        } else {
+            product.setDiscountedPrice(discountedPrice);
+        }
         product.setImageUrl(request.getImageUrl());
         product.setBrand(request.getBrand());
         product.setPrice(request.getPrice());
-        product.setSizes(request.getSize());
-        product.setQuantity(request.getQuantity());
+        product.setSizes(sizes);
+        product.setQuantity(totalQuantity);
         product.setCategory(thirdLevel);
         product.setCreatedAt(LocalDateTime.now());
 
@@ -83,8 +104,12 @@ public class ProductService {
     }
 
     // Delete Product By Id
-    public String deleteProduct(Long id) {
+    public String deleteProduct(Long id) throws UserException {
         Optional<Product> product = productRepo.findById(id);
+//        User user = userService.getProfileByToken(jwt);
+//
+//        if(product.)
+
         product.get().getSizes().clear();
         productRepo.deleteById(id);
         return "Product with ID: " + id + " is deleted successfully.";

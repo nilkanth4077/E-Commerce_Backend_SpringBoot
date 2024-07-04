@@ -1,15 +1,10 @@
 package com.e_commerce.controller;
 
-import com.e_commerce.entity.Product;
 import com.e_commerce.entity.Rating;
 import com.e_commerce.entity.User;
-import com.e_commerce.request.RatingRequest;
-import com.e_commerce.service.ProductService;
+import com.e_commerce.dto.RatingRequest;
 import com.e_commerce.service.RatingService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/rating")

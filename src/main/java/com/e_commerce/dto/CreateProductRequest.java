@@ -1,4 +1,4 @@
-package com.e_commerce.request;
+package com.e_commerce.dto;
 
 import com.e_commerce.entity.Size;
 
@@ -23,7 +23,7 @@ public class CreateProductRequest {
 
     private String color;
 
-    private Set<Size> size = new HashSet<>();
+    private Set<Size> sizes = new HashSet<>();
 
     private String imageUrl;
 
@@ -97,12 +97,12 @@ public class CreateProductRequest {
         this.color = color;
     }
 
-    public Set<Size> getSize() {
-        return size;
+    public Set<Size> getSizes() {
+        return sizes;
     }
 
-    public void setSize(Set<Size> size) {
-        this.size = size;
+    public void setSizes(Set<Size> sizes) {
+        this.sizes = sizes;
     }
 
     public String getImageUrl() {

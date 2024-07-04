@@ -99,6 +99,9 @@ public class Product {
 		this.createdAt = createdAt;
 	}
 
+	public Product(Long productId) {
+	}
+
 	public Long getId() {
 		return id;
 	}

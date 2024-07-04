@@ -33,6 +33,9 @@ public class Cart {
     public Cart() {
     }
 
+    public Cart(Long cartId) {
+    }
+
     public Long getId() {
         return id;
     }

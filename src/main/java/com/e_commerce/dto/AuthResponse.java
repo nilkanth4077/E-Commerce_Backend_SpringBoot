@@ -1,4 +1,4 @@
-package com.e_commerce.response;
+package com.e_commerce.dto;
 
 public class AuthResponse {
 

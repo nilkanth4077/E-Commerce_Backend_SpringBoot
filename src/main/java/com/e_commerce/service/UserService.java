@@ -27,7 +27,7 @@ public class UserService {
         throw new UserException("User not found with id: " + userId);
     }
 
-    public User findCustomUserProfileByToken(String token) throws UserException {
+    public User getProfileByToken(String token) throws UserException {
 		String email = jwtService.extractEmail(token);
 
 		User user = userRepo.findByEmail(email);
