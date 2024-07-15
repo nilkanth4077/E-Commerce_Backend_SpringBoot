@@ -3,6 +3,7 @@ package com.e_commerce.controller;
 import com.e_commerce.entity.Product;
 import com.e_commerce.dto.CreateProductRequest;
 import com.e_commerce.exception.UserException;
+import com.e_commerce.repository.ProductRepo;
 import com.e_commerce.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -16,9 +17,11 @@ import java.util.List;
 public class ProductController {
 
     private ProductService productService;
+    private ProductRepo productRepo;
 
-    public ProductController(ProductService productService){
+    public ProductController(ProductService productService, ProductRepo productRepo){
         this.productService = productService;
+        this.productRepo = productRepo;
     }
 
     @GetMapping("/all")
@@ -37,6 +40,12 @@ public class ProductController {
         Page<Product> res = productService.getAllProduct(category, color, size, minPrice, maxPrice, minDiscount, sort, stock, pageNumber, pageSize);
         System.out.println("Complete list of products: ");
         return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/no-filter/all")
+    public ResponseEntity<List<Product>> allProductsWithoutFilter(){
+        List<Product> products = productRepo.findAll();
+        return new ResponseEntity<>(products, HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/get/{productId}")

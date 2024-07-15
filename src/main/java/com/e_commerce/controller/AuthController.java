@@ -1,8 +1,7 @@
 package com.e_commerce.controller;
 
 import com.e_commerce.entity.Cart;
-import com.e_commerce.service.CartService;
-import com.e_commerce.service.UserService;
+import com.e_commerce.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -18,8 +17,6 @@ import com.e_commerce.exception.UserException;
 import com.e_commerce.repository.UserRepo;
 import com.e_commerce.dto.LoginRequest;
 import com.e_commerce.dto.AuthResponse;
-import com.e_commerce.service.JwtService;
-import com.e_commerce.service.MyUserService;
 
 import java.time.LocalDateTime;
 
@@ -33,10 +30,12 @@ public class AuthController {
     private MyUserService myUserService;
     private CartService cartService;
     private UserService userService;
+    private EmailService emailService;
 
 
-    public AuthController(UserRepo userRepository, PasswordEncoder passwordEncoder, MyUserService myUserService, JwtService jwtService, CartService cartService, UserService userService) {
+    public AuthController(UserRepo userRepository, EmailService emailService, PasswordEncoder passwordEncoder, MyUserService myUserService, JwtService jwtService, CartService cartService, UserService userService) {
         this.userRepository = userRepository;
+        this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
         this.myUserService = myUserService;
         this.jwtService = jwtService;
@@ -80,6 +79,15 @@ public class AuthController {
         AuthResponse authResponse = new AuthResponse();
         authResponse.setToken(token);
         authResponse.setMessage("Signup Success");
+        String emailBody = String.format(
+                "Dear " + savedUser.getFirstName() + ",\n\n" +
+                        "Your registration is successful. Here are the details:\n\n" +
+                        "Full name: " + savedUser.getFirstName() + " " + savedUser.getLastName() + "\n\n" +
+                        "Thank you for registering with us. If you have any questions or need further assistance, please do not hesitate to contact us.\n\n" +
+                        "Best regards,\n" +
+                        "From Ecommerce Service Provider"
+        );
+        emailService.sendSimpleMessage(savedUser.getEmail(), "Signup", emailBody);
 
         return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
     }
@@ -99,7 +107,7 @@ public class AuthController {
         return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.ACCEPTED);
     }
 
-    private Authentication authenticate(String username, String password) {
+    public Authentication authenticate(String username, String password) {
         UserDetails userDetails = myUserService.loadUserByUsername(username);
 
         if (userDetails == null) {
