@@ -18,7 +18,7 @@ public class JwtService {
     public String generateToken(Authentication auth){
         String token = Jwts.builder()
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + 846000000))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 2)) // 2 hours
                 .claim("email", auth.getName())
                 .signWith(key).compact();
 

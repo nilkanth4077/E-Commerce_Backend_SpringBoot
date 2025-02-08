@@ -88,13 +88,10 @@ public class TestAuthController {
         when(userRepository.save(any(User.class))).thenReturn(newUser);
         when(passwordEncoder.encode(newUser.getPassword())).thenReturn("encodedPassword");
 
-        ResponseEntity<AuthResponse> responseEntity = authController.createUserHandler(newUser);
+        ResponseEntity<String> responseEntity = authController.createUserHandler(newUser);
 
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-        assertEquals("Signup Success", responseEntity.getBody().getMessage());
-        assertNotNull(responseEntity.getBody().getToken());
-        assertEquals("mockedToken", responseEntity.getBody().getToken());
     }
 
 //    @Test

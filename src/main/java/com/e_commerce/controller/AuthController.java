@@ -1,7 +1,7 @@
 package com.e_commerce.controller;
 
-import com.e_commerce.entity.Cart;
 import com.e_commerce.service.*;
+import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -24,14 +24,13 @@ import java.time.LocalDateTime;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private UserRepo userRepository;
-    private JwtService jwtService;
-    private PasswordEncoder passwordEncoder;
-    private MyUserService myUserService;
-    private CartService cartService;
-    private UserService userService;
-    private EmailService emailService;
-
+    private final UserRepo userRepository;
+    private final EmailService emailService;
+    private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
+    private final MyUserService myUserService;
+    private final CartService cartService;
+    private final UserService userService;
 
     public AuthController(UserRepo userRepository, EmailService emailService, PasswordEncoder passwordEncoder, MyUserService myUserService, JwtService jwtService, CartService cartService, UserService userService) {
         this.userRepository = userRepository;
@@ -44,13 +43,12 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws UserException {
+    public ResponseEntity<String> createUserHandler(@RequestBody User user) throws UserException {
 
         String email = user.getEmail();
         String password = user.getPassword();
         String firstName = user.getFirstName();
         String lastName = user.getLastName();
-        String role = user.getRole();
         String mobile = user.getMobile();
 
         User isEmailExist = userRepository.findByEmail(email);
@@ -64,21 +62,13 @@ public class AuthController {
         createdUser.setPassword(passwordEncoder.encode(password));
         createdUser.setFirstName(firstName);
         createdUser.setLastName(lastName);
-        createdUser.setRole(role);
+        createdUser.setRole("USER");
         createdUser.setMobile(mobile);
         createdUser.setCreatedAt(LocalDateTime.now());
 
         User savedUser = userRepository.save(createdUser);
-        Cart cart = cartService.createCart(savedUser);
+        cartService.createCart(savedUser);
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(savedUser.getEmail(), savedUser.getPassword());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String token = jwtService.generateToken(authentication);
-
-        AuthResponse authResponse = new AuthResponse();
-        authResponse.setToken(token);
-        authResponse.setMessage("Signup Success");
         String emailBody = String.format(
                 "Dear " + savedUser.getFirstName() + ",\n\n" +
                         "Your registration is successful. Here are the details:\n\n" +
@@ -89,7 +79,7 @@ public class AuthController {
         );
         emailService.sendSimpleMessage(savedUser.getEmail(), "Signup", emailBody);
 
-        return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
+        return ResponseEntity.ok("User registered successfully");
     }
 
     @PostMapping("/login")
@@ -102,7 +92,9 @@ public class AuthController {
 
         String token = jwtService.generateToken(authentication);
 
-        AuthResponse authResponse = new AuthResponse(token, "Login Success");
+        User user = userRepository.findByEmail(authentication.getName());
+
+        AuthResponse authResponse = new AuthResponse(token, "Login Success", user.getRole(), user);
 
         return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.ACCEPTED);
     }
@@ -122,5 +114,15 @@ public class AuthController {
     @GetMapping("/profile")
     public User getProfileByToken(@RequestHeader("Authorization") String jwt) throws UserException {
         return userService.getProfileByToken(jwt);
+    }
+
+    @PostMapping("/email")
+    public String submitContactForm(
+            @RequestParam String name,
+            @RequestParam String email,
+            @RequestParam String subject,
+            @RequestParam String message) throws MessagingException {
+        emailService.sendUserDetails(name, email, subject, message);
+        return "Thank you for contacting us! Your message has been received. We will get back to you soon.";
     }
 }
