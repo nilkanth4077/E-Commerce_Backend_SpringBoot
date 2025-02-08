@@ -1,7 +1,9 @@
 package com.e_commerce.entity;
 
 import jakarta.persistence.Embeddable;
+import lombok.Data;
 
+@Data
 @Embeddable
 public class Size {
 
@@ -12,22 +14,6 @@ public class Size {
 	public Size() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
 	}
 
 }
