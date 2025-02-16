@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: e-commerce
+    ports:
+      - "3307:3306"
+    volumes:
+      - C:/Users/Infinity/mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
+
+
+  app:
+    build: .
+    container_name: e-commerce-container
+    environment:
+      SERVER_PORT: 8080
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DB: e-commerce
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      SHOW_SQL: true
+      DDL_AUTO: update
+      MAIL_USERNAME: nilkanth4077@gmail.com
+      MAIL_PASSWORD: wzgeyzteixwnsude
+      MAIL_HOST: smtp.gmail.com
+      MAIL_PORT: 587
+    ports:
+      - "8082:8080"
+    depends_on:
+      - mysql
+
+volumes:
+  mysql_data:
