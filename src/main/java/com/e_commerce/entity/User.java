@@ -1,5 +1,6 @@
 package com.e_commerce.entity;
 
+import com.e_commerce.dto.PaymentInformation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;

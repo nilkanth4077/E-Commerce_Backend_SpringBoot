@@ -1,5 +1,6 @@
 package com.e_commerce.entity;
 
+import com.e_commerce.dto.PaymentDetails;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

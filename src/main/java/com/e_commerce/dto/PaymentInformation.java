@@ -1,17 +1,10 @@
-package com.e_commerce.entity;
+package com.e_commerce.dto;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.persistence.Column;
 
-@Data
-@Entity
 public class PaymentInformation {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
 	@Column(name = "cardholder_name")
 	private String cardholderName;
@@ -24,5 +17,6 @@ public class PaymentInformation {
 	
 	@Column(name = "cvv")
 	private String cvv;
+
 
 }
