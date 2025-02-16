@@ -48,11 +48,6 @@ public class Product {
 	
 	@Column(name = "color")
 	private String color;
-
-	@Embedded
-	@ElementCollection
-	@Column(name = "sizes")
-	private Set<Size> sizes = new HashSet<>();
 	
 	@Column(name = "image_url")
 	private String imageUrl;
@@ -78,7 +73,7 @@ public class Product {
 	}
 
 	public Product(Long id, String title, String description, int price, int discountedPrice, int discountPercent,
-			int quantity, String brand, String color, Set<Size> sizes, String imageUrl, List<Rating> ratings,
+			int quantity, String brand, String color, String imageUrl, List<Rating> ratings,
 			List<Review> reviews, int numRatings, Category category, LocalDateTime createdAt) {
 		super();
 		this.id = id;
@@ -90,7 +85,6 @@ public class Product {
 		this.quantity = quantity;
 		this.brand = brand;
 		this.color = color;
-		this.sizes = sizes;
 		this.imageUrl = imageUrl;
 		this.ratings = ratings;
 		this.reviews = reviews;
@@ -172,14 +166,6 @@ public class Product {
 
 	public void setColor(String color) {
 		this.color = color;
-	}
-
-	public Set<Size> getSizes() {
-		return sizes;
-	}
-
-	public void setSizes(Set<Size> sizes) {
-		this.sizes = sizes;
 	}
 
 	public String getImageUrl() {

@@ -1,10 +1,5 @@
 package com.e_commerce.dto;
 
-import com.e_commerce.entity.Size;
-
-import java.util.HashSet;
-import java.util.Set;
-
 public class CreateProductRequest {
 
     private String title;
@@ -22,8 +17,6 @@ public class CreateProductRequest {
     private String brand;
 
     private String color;
-
-    private Set<Size> sizes = new HashSet<>();
 
     private String imageUrl;
 
@@ -95,14 +88,6 @@ public class CreateProductRequest {
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public Set<Size> getSizes() {
-        return sizes;
-    }
-
-    public void setSizes(Set<Size> sizes) {
-        this.sizes = sizes;
     }
 
     public String getImageUrl() {

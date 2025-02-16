@@ -2,8 +2,6 @@ package com.e_commerce.service;
 
 import com.e_commerce.entity.Category;
 import com.e_commerce.entity.Product;
-import com.e_commerce.entity.Size;
-import com.e_commerce.entity.User;
 import com.e_commerce.exception.UserException;
 import com.e_commerce.repository.CategoryRepo;
 import com.e_commerce.repository.ProductRepo;
@@ -18,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,14 +65,6 @@ public class ProductService {
 
         Product product = new Product();
 
-        // Total quantity
-        Set<Size> sizes = request.getSizes();
-        int totalQuantity = 0;
-
-        for (Size size : sizes) {
-            totalQuantity += size.getQuantity();
-        }
-
         // Set Discounted price
         int discountedPrice = request.getPrice() - ((request.getPrice() * request.getDiscountPercent()) / 100);
 
@@ -92,8 +81,7 @@ public class ProductService {
         product.setImageUrl(request.getImageUrl());
         product.setBrand(request.getBrand());
         product.setPrice(request.getPrice());
-        product.setSizes(sizes);
-        product.setQuantity(totalQuantity);
+        product.setQuantity(request.getQuantity());
         product.setCategory(thirdLevel);
         product.setCreatedAt(LocalDateTime.now());
 
@@ -110,7 +98,6 @@ public class ProductService {
 //
 //        if(product.)
 
-        product.get().getSizes().clear();
         productRepo.deleteById(id);
         return "Product with ID: " + id + " is deleted successfully.";
     }
