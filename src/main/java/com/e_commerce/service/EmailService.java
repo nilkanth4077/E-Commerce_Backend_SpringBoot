@@ -42,7 +42,7 @@ public class EmailService {
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
         // Set the recipient (your email address)
-        helper.setTo("useme1315@gmail.com");
+        helper.setTo("vrajpatel5471@gmail.com");
 
         // Set the subject
         helper.setSubject(subject);
