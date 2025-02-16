@@ -1,6 +1,5 @@
 package com.e_commerce.entity;
 
-import com.e_commerce.dto.PaymentDetails;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -30,9 +29,6 @@ public class Order {
 
     @OneToOne
     private Address shippingAddress;
-
-    @Embedded
-    private PaymentDetails paymentDetails = new PaymentDetails();
 
     private double totalPrice;
 
@@ -100,14 +96,6 @@ public class Order {
 
     public void setShippingAddress(Address shippingAddress) {
         this.shippingAddress = shippingAddress;
-    }
-
-    public PaymentDetails getPaymentDetails() {
-        return paymentDetails;
-    }
-
-    public void setPaymentDetails(PaymentDetails paymentDetails) {
-        this.paymentDetails = paymentDetails;
     }
 
     public double getTotalPrice() {

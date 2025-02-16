@@ -70,7 +70,7 @@ public class OrderService {
         createdOrder.setShippingAddress(address);
         createdOrder.setOrderDate(LocalDateTime.now());
         createdOrder.setOrderStatus("PENDING");
-        createdOrder.getPaymentDetails().setStatus("PENDING");
+//        createdOrder.getPaymentDetails().setStatus("PENDING");
         createdOrder.setCreatedAt(LocalDateTime.now());
 
         Order savedOrder = orderRepo.save(createdOrder);
@@ -86,31 +86,31 @@ public class OrderService {
     public Order placedOrder(Long orderId){
         Order order = orderRepo.findOrderById(orderId);
         order.setOrderStatus("PLACED");
-        order.getPaymentDetails().setStatus("COMPLETED");
+//        order.getPaymentDetails().setStatus("COMPLETED");
         return order;
     }
 
     public Order shippedOrder(Long orderId){
         Order order = orderRepo.findOrderById(orderId);
-        order.getPaymentDetails().setStatus("SHIPPED");
+//        order.getPaymentDetails().setStatus("SHIPPED");
         return orderRepo.save(order);
     }
 
     public Order deliveredOrder(Long orderId){
         Order order = orderRepo.findOrderById(orderId);
-        order.getPaymentDetails().setStatus("DELIVERED");
+//        order.getPaymentDetails().setStatus("DELIVERED");
         return orderRepo.save(order);
     }
 
     public Order cancelledOrder(Long orderId){
         Order order = orderRepo.findOrderById(orderId);
-        order.getPaymentDetails().setStatus("CANCELLED");
+//        order.getPaymentDetails().setStatus("CANCELLED");
         return orderRepo.save(order);
     }
 
     public Order confirmedOrder(Long orderId){
         Order order = orderRepo.findOrderById(orderId);
-        order.getPaymentDetails().setStatus("CONFIRMED");
+//        order.getPaymentDetails().setStatus("CONFIRMED");
         return orderRepo.save(order);
     }
 

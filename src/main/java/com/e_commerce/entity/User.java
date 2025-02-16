@@ -1,6 +1,5 @@
 package com.e_commerce.entity;
 
-import com.e_commerce.dto.PaymentInformation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -32,11 +31,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Address> address = new ArrayList<>();
 
-    @Embedded
-    @ElementCollection
-    @CollectionTable(name = "payment_information", joinColumns = @JoinColumn(name = "user_id"))
-    private List<PaymentInformation> paymentInformation = new ArrayList<>();
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Rating> ratings = new ArrayList<>();
@@ -53,7 +47,7 @@ public class User {
 	}
 
 	public User(Long id, String firstName, String lastName, String password, String email, String role,
-			String mobile, List<Address> address, List<PaymentInformation> paymentInformation, List<Rating> ratings,
+			String mobile, List<Address> address, List<Rating> ratings,
 			List<Review> reviews, LocalDateTime createdAt) {
 		super();
 		this.id = id;
@@ -64,7 +58,6 @@ public class User {
 		this.role = role;
 		this.mobile = mobile;
 		this.address = address;
-		this.paymentInformation = paymentInformation;
 		this.ratings = ratings;
 		this.reviews = reviews;
 		this.createdAt = createdAt;
