@@ -19,8 +19,6 @@ public class CartItem {
     @ManyToOne
     private Product product;
 
-    private String size;
-
     private int quantity;
 
     private int price;
@@ -54,14 +52,6 @@ public class CartItem {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
     }
 
     public int getQuantity() {

@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface CartItemRepo extends JpaRepository<CartItem, Long> {
 
-    @Query("SELECT ci FROM CartItem ci WHERE ci.cart = :cart AND ci.product = :product AND ci.size = :size AND ci.userId = :userId")
-    CartItem isCartItemExist(@Param("cart") Cart cart, @Param("product") Optional<Product> product, @Param("size") String size, @Param("userId") Long userId);
+    @Query("SELECT ci FROM CartItem ci WHERE ci.cart = :cart AND ci.product = :product AND ci.userId = :userId")
+    CartItem isCartItemExist(@Param("cart") Cart cart, @Param("product") Optional<Product> product, @Param("userId") Long userId);
 
 }

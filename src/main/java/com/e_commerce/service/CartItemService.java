@@ -56,8 +56,8 @@ public class CartItemService {
         }
     }
 
-    public CartItem isCartItemExist(Cart cart, Product product, String size, Long userId){
-        CartItem cartItem = cartItemRepo.isCartItemExist(cart, Optional.ofNullable(product), size, userId);
+    public CartItem isCartItemExist(Cart cart, Product product, Long userId){
+        CartItem cartItem = cartItemRepo.isCartItemExist(cart, Optional.ofNullable(product), userId);
         return cartItem;
     }
 

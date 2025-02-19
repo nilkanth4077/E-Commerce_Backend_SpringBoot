@@ -32,7 +32,7 @@ public class CartService {
         Product product = productService.getProduct(req.getProductId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
-        CartItem isPresent = cartItemService.isCartItemExist(cart, product, req.getSize(), userId);
+        CartItem isPresent = cartItemService.isCartItemExist(cart, product, userId);
 
         if (isPresent == null) {
             CartItem cartItem = new CartItem();
@@ -43,7 +43,6 @@ public class CartService {
 
             int price = req.getQuantity() * product.getDiscountedPrice();
             cartItem.setPrice(price);
-            cartItem.setSize(req.getSize());
 
             CartItem createdCartItem = cartItemService.createCartItem(cartItem);
             cart.getCartItems().add(createdCartItem);

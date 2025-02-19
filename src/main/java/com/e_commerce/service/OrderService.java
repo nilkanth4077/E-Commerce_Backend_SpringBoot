@@ -49,7 +49,6 @@ public class OrderService {
             orderItem.setPrice(item.getPrice());
             orderItem.setProduct(item.getProduct());
             orderItem.setQuantity(item.getQuantity());
-            orderItem.setSize(item.getSize());
             orderItem.setUserId(item.getUserId());
             orderItem.setDiscountedPrice(item.getDiscountedPrice());
 

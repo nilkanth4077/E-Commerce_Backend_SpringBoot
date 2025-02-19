@@ -81,9 +81,8 @@ public class CartItemController {
     public ResponseEntity<CartItem> isCartItemExist(
             @RequestParam Long cartId,
             @RequestParam Long productId,
-            @RequestParam String size,
             @RequestParam Long userId) {
-        CartItem cartItem = cartItemService.isCartItemExist(new Cart(cartId), new Product(productId), size, userId);
+        CartItem cartItem = cartItemService.isCartItemExist(new Cart(cartId), new Product(productId), userId);
         return ResponseEntity.ok(cartItem);
     }
 }
