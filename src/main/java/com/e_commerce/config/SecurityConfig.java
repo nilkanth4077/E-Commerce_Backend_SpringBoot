@@ -29,7 +29,11 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
         cfg.setAllowedOrigins(Arrays.asList(
-                "http://localhost:3000", "http://127.0.0.1:5500", "https://e-commerce-backend-springboot.onrender.com", "https://donabin-shop-pwewh2bgr-nilkanth4077s-projects.vercel.app/"
+                "http://localhost:3000",
+                "http://127.0.0.1:5500",
+                "https://e-commerce-backend-springboot.onrender.com",
+                "https://donabin-shop-pwewh2bgr-nilkanth4077s-projects.vercel.app/",
+                "https://donabin-shop.vercel.app"
         ));
         cfg.setAllowedMethods(Collections.singletonList("*"));
         cfg.setAllowCredentials(true);
@@ -49,8 +53,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/api/**").authenticated().anyRequest().permitAll()
                 );
-                http.httpBasic(Customizer.withDefaults());
-                http.formLogin(Customizer.withDefaults());
+        http.httpBasic(Customizer.withDefaults());
+        http.formLogin(Customizer.withDefaults());
 
         return http.build();
     }
